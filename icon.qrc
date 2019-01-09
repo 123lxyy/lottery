@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>icon/close.png</file>
+        <file>icon/file.png</file>
+        <file>icon/home.png</file>
+        <file>icon/max.png</file>
+        <file>icon/min.png</file>
+        <file>icon/setting.png</file>
+    </qresource>
+</RCC>
