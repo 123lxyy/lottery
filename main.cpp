@@ -4,9 +4,9 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    //QTextCodec *code = QTextCodec::codecForName("utf-8");
     Widget w;
-    w.show();
+    //w.show();
+    w.showFullScreen();
 
     return a.exec();
 }

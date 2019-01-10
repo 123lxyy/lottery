@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include <QDebug>
+#include <QSettings>
+#include <QTextCodec>
+#include <QFile>
 namespace Ui {
 class Congratulation;
 }
@@ -28,6 +31,8 @@ private:
     QStringList list;
     int rand;
     QString path;
+    QStringList splitList;
+
 };
 
 #endif // CONGRATULATION_H

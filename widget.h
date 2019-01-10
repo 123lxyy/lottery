@@ -10,6 +10,8 @@
 #include <QTime>
 #include <QListWidget>
 
+#define  _size 103
+
 namespace Ui {
 class Widget;
 }
@@ -44,13 +46,15 @@ private:
     QString path;
     QString strAppend;
     QStringList files;
+    QStringList fileCopy;
     QImage *image;
-    QLabel *label[11];
-    //QTextCodec *code;
+    QLabel *label;
     QTimer *timer;
     QTime time;
     int rand;
     int flag;
+    int randNum;
+    QList <QLabel *> labelList;
 
 };
 

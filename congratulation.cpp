@@ -42,8 +42,8 @@ void Congratulation::initCenter()
     ui->label_2->setPixmap(QPixmap::fromImage(*image));
     //截取字符串
     QString str = list.at(rand);
-    QStringList list = str.split(".");
-    ui->label_3->setText(list[0]);
+    splitList = str.split(".");
+    ui->label_3->setText(splitList[0]);
 }
 void Congratulation::initBottom()
 {
@@ -55,6 +55,17 @@ void Congratulation::initBottom()
 /******************************** slots ****************************************/
 void Congratulation::on_pushButton_clicked()
 {
-
+    //将中奖人员写进文件
+    //QString s =this->mes;
+    //QString name = splitList[0];
+    QFile file("./savewinmes");
+    this->mes.append(":");
+    this->mes.append(splitList[0]);
+    this->mes.append(";");
+    if(file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)){
+        file.write(this->mes.toUtf8());
+    }
+    file.close();
+    this->close();
 }
 /********************************end slots****************************************/

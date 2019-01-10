@@ -7,13 +7,15 @@ Setting::Setting(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowFlag(Qt::FramelessWindowHint);
+    QIcon icon;
+    icon.addFile(":/icon/icon/close.png");
+    ui->pushButton_4->setIcon(icon);
 }
 
 Setting::~Setting()
 {
     delete ui;
 }
-
 void Setting::paintEvent(QPaintEvent *p)
 {
     QPainter painter(this);
@@ -49,6 +51,17 @@ QString Setting::getThrSetting()
 {
     return strThr;
 }
+
+void Setting::mousePressEvent(QMouseEvent *event)
+{
+    this->windowPos = this->pos();                // 获得部件当前位置
+    this->mousePos = event->globalPos();     // 获得鼠标位置
+    this->dPos = mousePos - windowPos;       // 移动后部件所在的位置
+}
+void Setting::mouseMoveEvent(QMouseEvent *event)
+{
+     this->move(event->globalPos() - this->dPos);
+}
 /******************************end function**********************************/
 
 
@@ -79,4 +92,11 @@ void Setting::on_pushButton_3_clicked()
     this->close();
 
 }
+void Setting::on_pushButton_4_clicked()
+{
+    //关闭设置界面
+    this->close();
+}
 /******************************end slots **********************************/
+
+

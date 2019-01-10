@@ -2,6 +2,7 @@
 #include "ui_widget.h"
 #include "setting.h"
 #include "congratulation.h"
+#include "exhibitors.h"
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -12,9 +13,8 @@ Widget::Widget(QWidget *parent) :
     initCenter();
     timer =new QTimer;
     this->setWindowFlag(Qt::FramelessWindowHint);
-    this->setMinimumSize(740,480);
-    this->setMaximumSize(740,480);
     connect(timer, SIGNAL(timeout()), this, SLOT(doLottery()));
+
 }
 
 Widget::~Widget()
@@ -69,21 +69,23 @@ void Widget::initCenter()
         stringlist.append("*.png");
         files = dir.entryList(stringlist, QDir::Files|QDir::Readable, QDir::Name);
         qDebug() << "files count is:" << files.size();
-        qDebug() << files;
+        fileCopy = files;
+//        qDebug()<<Q_FUNC_INFO<<__LINE__<<files.size();
         for(int i =0 ;i< files.size();i++)
         {
-            label[i] = new QLabel;
-            label[i]->setMinimumSize(50,50);
-            label[i]->setMaximumSize(50,50);
-            label[i]->setScaledContents(true);
+            label = new QLabel;
+            label->setMinimumSize(70,70);
+            label->setMaximumSize(70,70);
+            label->setScaledContents(true);
+            labelList.append(label);
             path = "D:/qt project/lottery/image/";
             strAppend = path.append(files.at(i));
-            qDebug() << strAppend;
             image = new QImage;
             image->load(strAppend);
-            label[i]->setPixmap(QPixmap::fromImage(*image));
-            ui->gridLayout->addWidget(label[i], i/10, i%10);
+            labelList.at(i)->setPixmap(QPixmap::fromImage(*image));
+            ui->gridLayout->addWidget(labelList.at(i), i/15, i%15);
         }
+        qDebug() << "enter";
 
     }else{
         QDir dir(strOne);
@@ -95,7 +97,6 @@ void Widget::initCenter()
 void Widget::paintEvent(QPaintEvent *parent)
 {
     initTop();
-
 }
 void Widget::sleep(int msec)
 {
@@ -110,10 +111,8 @@ void Widget::sleep(int msec)
 /********************************* slots *****************************************/
 void Widget::on_pushButton_4_clicked()
 {
-    qDebug() << "enter!!";
     //设置窗口
     Setting *setting = new Setting;
-    this->showNormal();
     setting->show();
     setting->activateWindow();
 }
@@ -136,26 +135,31 @@ void Widget::on_pushButton_clicked()
 void Widget::on_pushButton_5_clicked()
 {
     //开始
-    timer->start(50);
+    timer->start(20);
 }
 
 void Widget::on_pushButton_6_clicked()
 {
-    //停止
-    flag = true;
+    //停止 
     timer->stop();
+    flag = true;
     QString comBoxStr = ui->comboBox->currentText();
     //qDebug() << comBoxStr;
     path = "D:/qt project/lottery/image/";
     Congratulation *con = new Congratulation();
-    con->getMessage(comBoxStr,files,rand,path);
+    qDebug() << "files num :" << files.count();
+    con->getMessage(comBoxStr,fileCopy,randNum,path);
     con->show();
     con->activateWindow();
+    files.removeAt(rand);
 }
 
 void Widget::on_pushButton_7_clicked()
 {
     //查看中奖名单
+    Exhibitors *ex = new Exhibitors;
+    ex->show();
+    ex->activateWindow();
 }
 
 void Widget::doLottery()
@@ -165,12 +169,14 @@ void Widget::doLottery()
     qsrand(time.msec()+time.second()*1000);
     rand = qrand() % files.size();
     //qDebug() << "rand num:" << rand;
-
+    QString name = files.at(rand);
+    randNum = fileCopy.indexOf(name);
+    qDebug() << "randNum :" << randNum;
     flag = false;
-    label[rand]->setStyleSheet("border:2px solid red;");
-    sleep(20);
+    labelList.at(randNum)->setStyleSheet("border:15px solid red;");
+    sleep(10);
     if(!flag){
-       label[rand]->setStyleSheet("null;");
+       labelList.at(randNum)->setStyleSheet("null;");
        flag = true;
     }
 }

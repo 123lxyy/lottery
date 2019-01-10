@@ -27,17 +27,20 @@ SOURCES += \
         main.cpp \
         widget.cpp \
     setting.cpp \
-    congratulation.cpp
+    congratulation.cpp \
+    exhibitors.cpp
 
 HEADERS += \
         widget.h \
     setting.h \
-    congratulation.h
+    congratulation.h \
+    exhibitors.h
 
 FORMS += \
         widget.ui \
     setting.ui \
-    congratulation.ui
+    congratulation.ui \
+    exhibitors.ui
 
 RESOURCES += \
     icon.qrc
