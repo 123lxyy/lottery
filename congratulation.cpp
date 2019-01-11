@@ -14,14 +14,16 @@ Congratulation::~Congratulation()
     delete ui;
 }
 
+
 /********************************  function  ****************************************/
-void Congratulation::getMessage(QString mes, QStringList list, int rand,QString path)
+void Congratulation::getMessage(QString mes, QStringList list, int rand,QString path,QString strThr)
 {
     this->mes = mes;
     this->list = list;
     this->rand = rand;
     this->path = path;
-    //qDebug() << this->mes << "  " << this->list << "  " << this->rand;
+    this->strThr = strThr;
+    //qDebug() << this->strThr;
     initTop();
     initCenter();
 }
@@ -35,9 +37,8 @@ void Congratulation::initTop()
 void Congratulation::initCenter()
 {
     this->path.append(list.at(rand));
-    //qDebug() << "get file path:" << this->path;
     QImage *image = new QImage;
-    image->load(this->path);
+    image->load(path);
     ui->label_2->setScaledContents(true);
     ui->label_2->setPixmap(QPixmap::fromImage(*image));
     //截取字符串
@@ -49,6 +50,30 @@ void Congratulation::initBottom()
 {
 
 }
+void Congratulation::mousePressEvent(QMouseEvent *event)
+{
+    this->windowPos = this->pos();                // 获得部件当前位置
+    this->mousePos = event->globalPos();     // 获得鼠标位置
+    this->dPos = mousePos - windowPos;       // 移动后部件所在的位置
+}
+void Congratulation::mouseMoveEvent(QMouseEvent *event)
+{
+     this->move(event->globalPos() - this->dPos);
+}
+void Congratulation::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event);
+    QBrush brush;
+    brush.setColor("#FFA500");
+    brush.setStyle(Qt::SolidPattern);
+
+    QPainter p(this);
+    p.setPen(Qt::NoPen);
+    p.setBrush(brush);
+    p.drawRect(rect());
+
+}
+
 /********************************end function****************************************/
 
 
@@ -56,9 +81,8 @@ void Congratulation::initBottom()
 void Congratulation::on_pushButton_clicked()
 {
     //将中奖人员写进文件
-    //QString s =this->mes;
-    //QString name = splitList[0];
-    QFile file("./savewinmes");
+    qDebug() << "write file:" << strThr;
+    QFile file(strThr);
     this->mes.append(":");
     this->mes.append(splitList[0]);
     this->mes.append(";");
@@ -69,3 +93,5 @@ void Congratulation::on_pushButton_clicked()
     this->close();
 }
 /********************************end slots****************************************/
+
+

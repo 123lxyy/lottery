@@ -9,8 +9,10 @@
 #include <QLabel>
 #include <QTime>
 #include <QListWidget>
-
-#define  _size 103
+#include <QPalette>
+#include "setting.h"
+#include "exhibitors.h"
+#include "congratulation.h"
 
 namespace Ui {
 class Widget;
@@ -23,10 +25,12 @@ class Widget : public QWidget
 public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
-    void initTop();
+    void initTop(QPaintEvent *parent);
     void initCenter();
     void paintEvent(QPaintEvent *parent);
     void sleep(int msec);
+    void autoCreateFile();
+    void doComBox();
 
 
 private slots:
@@ -55,6 +59,14 @@ private:
     int flag;
     int randNum;
     QList <QLabel *> labelList;
+    QString strOne;
+    QString strTwo;
+    QString strThr;
+    Setting *setting;
+    Exhibitors *ex;
+    Congratulation *con;
+    QString filepath;
+    QStringList conBoxList;
 
 };
 

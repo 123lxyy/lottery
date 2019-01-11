@@ -6,5 +6,6 @@
         <file>icon/max.png</file>
         <file>icon/min.png</file>
         <file>icon/setting.png</file>
+        <file>icon/bg.jpg</file>
     </qresource>
 </RCC>

@@ -6,6 +6,8 @@
 #include <QDebug>
 #include <QFont>
 #include <QLabel>
+#include <QMouseEvent>
+#include <QPainter>
 namespace Ui {
 class Exhibitors;
 }
@@ -19,6 +21,10 @@ public:
     ~Exhibitors();
     void readFile();
     void parse(QString str);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void getpath(QString path);
+    void paintEvent(QPaintEvent *event);
 
 private:
     Ui::Exhibitors *ui;
@@ -30,6 +36,10 @@ private:
     QList <QLabel*> sanList;
     QList <QLabel*> luckyList;
     QFont *font;
+    QPoint windowPos;
+    QPoint mousePos;
+    QPoint dPos;
+    QString path;
 };
 
 #endif // EXHIBITORS_H

@@ -6,17 +6,17 @@ Exhibitors::Exhibitors(QWidget *parent) :
     ui(new Ui::Exhibitors)
 {
     ui->setupUi(this);
-    ui->label->setAlignment(Qt::AlignHCenter);
     ui->label_3->setAlignment(Qt::AlignCenter);
     ui->label_5->setAlignment(Qt::AlignCenter);
     ui->label_6->setAlignment(Qt::AlignCenter);
+    this->setWindowFlag(Qt::FramelessWindowHint);
     num_one = 0;
     num_two = 0;
     num_three = 0;
     font = new QFont();
     font->setFamily("黑体");
     font->setPointSize(10);
-    readFile();
+
 }
 
 Exhibitors::~Exhibitors()
@@ -26,13 +26,12 @@ Exhibitors::~Exhibitors()
 
 void Exhibitors::readFile()
 {
-    QFile file("./savewinmes");
+    QFile file(path);
     if(file.open(QIODevice::ReadOnly)){
        QByteArray array;
        while(file.atEnd() == false){
            array += file.readLine();
        }
-       //qDebug() << array.data();
        parse(array.data());
     }
     file.close();
@@ -74,4 +73,24 @@ void Exhibitors::parse(QString str)
             num_three++;
         }
     }
+}
+void Exhibitors::mousePressEvent(QMouseEvent *event)
+{
+    this->windowPos = this->pos();                // 获得部件当前位置
+    this->mousePos = event->globalPos();     // 获得鼠标位置
+    this->dPos = mousePos - windowPos;       // 移动后部件所在的位置
+}
+void Exhibitors::mouseMoveEvent(QMouseEvent *event)
+{
+     this->move(event->globalPos() - this->dPos);
+}
+void Exhibitors::getpath(QString path)
+{
+    this->path = path;
+    readFile();
+}
+void Exhibitors::paintEvent(QPaintEvent *event)
+{
+    QPainter p(this);
+    p.drawPixmap(0,0,this->width(),this->height(),QPixmap(":/icon/icon/bg.jpg"));
 }

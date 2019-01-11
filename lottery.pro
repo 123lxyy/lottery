@@ -28,13 +28,15 @@ SOURCES += \
         widget.cpp \
     setting.cpp \
     congratulation.cpp \
-    exhibitors.cpp
+    exhibitors.cpp \
+    mywidget.cpp
 
 HEADERS += \
         widget.h \
     setting.h \
     congratulation.h \
-    exhibitors.h
+    exhibitors.h \
+    mywidget.h
 
 FORMS += \
         widget.ui \
