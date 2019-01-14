@@ -7,6 +7,7 @@ Congratulation::Congratulation(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowFlag(Qt::FramelessWindowHint);
+
 }
 
 Congratulation::~Congratulation()
@@ -16,14 +17,14 @@ Congratulation::~Congratulation()
 
 
 /********************************  function  ****************************************/
-void Congratulation::getMessage(QString mes, QStringList list, int rand,QString path,QString strThr)
+void Congratulation::getMessage(QString mes, QStringList list, QList <int> rand,QString path,QString strThr)
 {
     this->mes = mes;
     this->list = list;
     this->rand = rand;
     this->path = path;
     this->strThr = strThr;
-    //qDebug() << this->strThr;
+    qDebug() << "get randInt:" << this->rand;
     initTop();
     initCenter();
 }
@@ -66,7 +67,6 @@ void Congratulation::paintEvent(QPaintEvent *event)
     QBrush brush;
     brush.setColor("#FFA500");
     brush.setStyle(Qt::SolidPattern);
-
     QPainter p(this);
     p.setPen(Qt::NoPen);
     p.setBrush(brush);
@@ -80,12 +80,12 @@ void Congratulation::paintEvent(QPaintEvent *event)
 /******************************** slots ****************************************/
 void Congratulation::on_pushButton_clicked()
 {
-    //将中奖人员写进文件
-    qDebug() << "write file:" << strThr;
+    //将中奖人员写进文件  
     QFile file(strThr);
     this->mes.append(":");
     this->mes.append(splitList[0]);
     this->mes.append(";");
+    //qDebug() << "write file:" << this->mes;
     if(file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)){
         file.write(this->mes.toUtf8());
     }

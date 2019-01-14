@@ -13,10 +13,15 @@ Exhibitors::Exhibitors(QWidget *parent) :
     num_one = 0;
     num_two = 0;
     num_three = 0;
+    QIcon icon;
+    icon.addFile(":/icon/icon/close.png");
+    ui->pushButton->setIcon(icon);
+    ui->pushButton->setStyleSheet("QPushButton{background: transparent;}");
     font = new QFont();
     font->setFamily("黑体");
     font->setPointSize(10);
-
+    //设置界面为模态框
+    this->setWindowModality(Qt::ApplicationModal);
 }
 
 Exhibitors::~Exhibitors()
@@ -43,7 +48,6 @@ void Exhibitors::parse(QString str)
     qDebug() << list;
     for(int i = 0; i < list.size(); i++)
     {
-        //qDebug() << list.at(i);
         QString s = list.at(i);
         typeList = s.split(":");
         if(s.contains("一等奖")){
@@ -87,10 +91,16 @@ void Exhibitors::mouseMoveEvent(QMouseEvent *event)
 void Exhibitors::getpath(QString path)
 {
     this->path = path;
+    qDebug() << this->path;
     readFile();
 }
 void Exhibitors::paintEvent(QPaintEvent *event)
 {
     QPainter p(this);
     p.drawPixmap(0,0,this->width(),this->height(),QPixmap(":/icon/icon/bg.jpg"));
+}
+
+void Exhibitors::on_pushButton_clicked()
+{
+    this->close();
 }

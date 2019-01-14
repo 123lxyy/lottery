@@ -42,6 +42,8 @@ private slots:
     void on_pushButton_6_clicked();
     void on_pushButton_7_clicked();
     void doLottery();
+    void changeComBox();
+    void getShowPath(bool bt2IsDown);
 
 private:
     Ui::Widget *ui;
@@ -56,7 +58,6 @@ private:
     QTimer *timer;
     QTime time;
     int rand;
-    int flag;
     int randNum;
     QList <QLabel *> labelList;
     QString strOne;
@@ -67,7 +68,11 @@ private:
     Congratulation *con;
     QString filepath;
     QStringList conBoxList;
-
+    QStringList afterBoxList;
+    bool bt2IsDown;
+    int peopleNum;
+    QList <int> randInt;
+    QList <int> randIntCopy;
 };
 
 #endif // WIDGET_H

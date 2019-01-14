@@ -26,6 +26,9 @@ public:
     void getpath(QString path);
     void paintEvent(QPaintEvent *event);
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::Exhibitors *ui;
     QStringList list;

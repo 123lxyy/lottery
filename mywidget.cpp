@@ -16,7 +16,6 @@ void MyWidget::paintEvent(QPaintEvent *event)
     QBrush brush;
     brush.setColor("#B22222");
     brush.setStyle(Qt::SolidPattern);
-
     QPainter p(this);
     p.setPen(Qt::NoPen);
     p.setBrush(brush);

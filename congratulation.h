@@ -19,7 +19,7 @@ class Congratulation : public QWidget
 
 public:
     explicit Congratulation(QWidget *parent = 0);
-    void getMessage(QString mes, QStringList list, int rand,QString path, QString strThr);
+    void getMessage(QString mes, QStringList list, QList <int> rand,QString path, QString strThr);
     void initTop();
     void initCenter();
     void initBottom();
@@ -31,13 +31,12 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-    //void settingToCon(QStringList list);
 
 private:
     Ui::Congratulation *ui;
     QString mes;
     QStringList list;
-    int rand;
+    QList <int> rand;
     QString path;
     QStringList splitList;
     QPoint windowPos;

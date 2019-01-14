@@ -16,6 +16,8 @@ Setting::Setting(QWidget *parent) :
     strOne = ui->lineEdit->text();
     ui->textEdit->setText("一等奖；二等奖；三等奖；幸运奖");
     strTwo = ui->textEdit->toPlainText();
+    bt2IsDown = false;
+    this->setWindowModality(Qt::ApplicationModal);
 }
 
 Setting::~Setting()
@@ -25,7 +27,8 @@ Setting::~Setting()
 void Setting::paintEvent(QPaintEvent *p)
 {
     QPainter painter(this);
-    QFont font("Microsoft YaHei", 13, 50, true);
+
+    QFont font("Microsoft YaHei", 13, 50, false);
     painter.setFont(font);
     painter.drawText(this->width()/2-10, 25, "设置");
 
@@ -41,6 +44,8 @@ void Setting::paintEvent(QPaintEvent *p)
     ui->pushButton->setIcon(icon);
     icon.addFile(":/icon/icon/file.png");
     ui->pushButton_2->setIcon(icon);
+
+
 
 }
 
@@ -82,21 +87,27 @@ void Setting::on_pushButton_clicked()
 
 void Setting::on_pushButton_2_clicked()
 {
+    bt2IsDown =true;
     fileDialog = new QFileDialog(this);
     fileDialog->setFileMode(QFileDialog::AnyFile);
     strThr = fileDialog->getOpenFileName();
     ui->lineEdit_2->setText(strThr);
+    emit btIsDown(bt2IsDown);
 }
 
 void Setting::on_pushButton_3_clicked()
 {
+    //确定
     //传递设置里面的参数
     strTwo = ui->textEdit->toPlainText();
+    //产生一个信号
+    emit changeComBox();
+    //qDebug() << strOne << strTwo << strThr;
     this->close();
 }
 void Setting::on_pushButton_4_clicked()
 {
-    //关闭设置界面
+    //退出，关闭设置界面
     this->close();
 }
 /******************************end slots **********************************/

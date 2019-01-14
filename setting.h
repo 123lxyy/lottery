@@ -34,7 +34,9 @@ private slots:
     void on_pushButton_3_clicked();
     void on_pushButton_4_clicked();
 
-
+signals:
+    void changeComBox();
+    void btIsDown(bool btIsDown);
 private:
     Ui::Setting *ui;
     QFileDialog *fileDialog;
@@ -44,6 +46,7 @@ private:
     QPoint windowPos;
     QPoint mousePos;
     QPoint dPos;
+    bool bt2IsDown;
 };
 
 #endif // SETTING_H
